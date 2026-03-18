@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sandbox-security"
+version = "0.1.0"
+description = "沙箱安全运行环境，用于隔离运行不可信 Web 服务/API"
+requires-python = ">=3.10"
+dependencies = [
+    "pydantic>=2.0",
+    "click>=8.0",
+    "fastapi>=0.100",
+    "uvicorn>=0.22",
+    "docker>=6.0",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7", "pytest-cov>=4"]
+
+[tool.setuptools.packages.find]
+include = ["sandbox_core*", "cli*", "web*"]
+
+[project.scripts]
+sandbox = "cli.main:cli"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

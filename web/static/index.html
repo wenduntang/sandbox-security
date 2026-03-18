@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>沙箱安全运行环境</title>
+</head>
+<body>
+  <h1>沙箱安全运行环境</h1>
+  <form id="runForm">
+    <label>命令: <input name="command" value="echo ok" /></label>
+    <button type="submit">运行</button>
+  </form>
+  <pre id="result"></pre>
+  <script>
+    document.getElementById('runForm').onsubmit = async (e) => {
+      e.preventDefault();
+      const cmd = e.target.command.value;
+      const r = await fetch('/run', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ command: cmd })
+      });
+      const j = await r.json();
+      document.getElementById('result').textContent = JSON.stringify(j, null, 2);
+    };
+  </script>
+</body>
+</html>
